@@ -1,5 +1,11 @@
 package ru.hawoline.towerdefense;
 
+import ru.hawoline.towerdefense.listener.KeyBoardListener;
+import ru.hawoline.towerdefense.listener.MyMouseListener;
+import ru.hawoline.towerdefense.scene.Menu;
+import ru.hawoline.towerdefense.scene.Playing;
+import ru.hawoline.towerdefense.scene.Settings;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
@@ -15,6 +21,14 @@ public class Game extends JFrame implements Runnable {
     private long lastTimeUpdatePerSecond;
     private Thread gameThread;
 
+    private MyMouseListener myMouseListener;
+    private KeyBoardListener keyBoardListener;
+
+    private Render render;
+    private Playing playing;
+    private Menu menu;
+    private Settings settings;
+
     private static final long TIME_PER_FRAME = 1000 / 120;
     private static final long TIME_PER_UPDATE = 1000 / 60;
 
@@ -23,24 +37,33 @@ public class Game extends JFrame implements Runnable {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        importImages();
-        gameScreen = new GameScreen(bufferedImage);
+        gameScreen = new GameScreen(this);
         add(gameScreen);
-
+        pack();
+        initInputs();
         gameThread = new Thread(this);
         gameThread.start();
     }
 
-    private void importImages() {
-        InputStream inputStream = getClass().getResourceAsStream("res/spriteatlas.png");
-
-        try {
-            bufferedImage = ImageIO.read(inputStream);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void initScenesAndRender() {
+        render = new Render();
+        gameScreen = new GameScreen();
+        menu = new Menu();
+        playing = new Playing();
     }
+
+    private void initInputs() {
+        myMouseListener = new MyMouseListener();
+        keyBoardListener = new KeyBoardListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(keyBoardListener);
+
+        requestFocus();
+    }
+
+
 
     private void loopGame() {
         while (true) {
@@ -75,5 +98,21 @@ public class Game extends JFrame implements Runnable {
 
     public static void main(String[] args) {
         Game game = new Game();
+    }
+
+    public Render getRender() {
+        return render;
+    }
+
+    public Playing getPlaying() {
+        return playing;
+    }
+
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public Settings getSettings() {
+        return settings;
     }
 }

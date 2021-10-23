@@ -8,33 +8,28 @@ import java.util.Random;
 
 public class GameScreen extends JPanel {
     private Random random;
-    private BufferedImage bufferedImage;
-    private ArrayList<BufferedImage> sprites = new ArrayList<>();
+    private Game game;
+    private Dimension size;
+    private Render render;
 
-    public GameScreen(BufferedImage bufferedImage) {
+    public GameScreen(Game game) {
+        this.game = game;
         random = new Random();
-        this.bufferedImage = bufferedImage;
-
-        loadSprites();
+        setPanelSize();
+        render = new Render(this);
     }
 
-    private void loadSprites() {
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
-                sprites.add(bufferedImage.getSubimage(x * 32, y * 32, 32, 32));
-            }
-        }
+    private void setPanelSize() {
+        size = new Dimension(640, 640);
+        setMinimumSize(size);
+        setPreferredSize(size);
+        setMaximumSize(size);
     }
+
 
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
-//        graphics.drawImage(sprites.get(19), 0, 0, null);
-        for (int y = 0; y < 20; y++) {
-            for (int x = 0; x < 20; x++) {
-                graphics.drawImage(sprites.get(random.nextInt(100)), x * 32, y * 32 , null);
-            }
-        }
     }
 }
