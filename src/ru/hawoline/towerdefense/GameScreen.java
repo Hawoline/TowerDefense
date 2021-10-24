@@ -16,7 +16,7 @@ public class GameScreen extends JPanel {
         this.game = game;
         random = new Random();
         setPanelSize();
-        render = new Render(this);
+        render = new Render(game);
     }
 
     private void setPanelSize() {
@@ -31,5 +31,6 @@ public class GameScreen extends JPanel {
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
 
+        game.getRender().render(graphics);
     }
 }

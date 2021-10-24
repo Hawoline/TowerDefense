@@ -6,11 +6,8 @@ import ru.hawoline.towerdefense.scene.Menu;
 import ru.hawoline.towerdefense.scene.Playing;
 import ru.hawoline.towerdefense.scene.Settings;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Game extends JFrame implements Runnable {
     private GameScreen gameScreen;
@@ -33,10 +30,11 @@ public class Game extends JFrame implements Runnable {
     private static final long TIME_PER_UPDATE = 1000 / 60;
 
     public Game() {
-        setSize(640, 640);
+        initScenesAndRender();
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+
         gameScreen = new GameScreen(this);
         add(gameScreen);
         pack();
@@ -46,10 +44,10 @@ public class Game extends JFrame implements Runnable {
     }
 
     private void initScenesAndRender() {
-        render = new Render();
-        gameScreen = new GameScreen();
-        menu = new Menu();
-        playing = new Playing();
+        render = new Render(this);
+        gameScreen = new GameScreen(this);
+        menu = new Menu(this);
+        playing = new Playing(this);
     }
 
     private void initInputs() {
@@ -62,8 +60,6 @@ public class Game extends JFrame implements Runnable {
 
         requestFocus();
     }
-
-
 
     private void loopGame() {
         while (true) {
