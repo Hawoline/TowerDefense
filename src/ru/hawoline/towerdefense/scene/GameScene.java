@@ -2,8 +2,6 @@ package ru.hawoline.towerdefense.scene;
 
 import ru.hawoline.towerdefense.Game;
 
-import java.awt.*;
-
 public abstract class GameScene implements SceneMethod {
     private Game game;
 

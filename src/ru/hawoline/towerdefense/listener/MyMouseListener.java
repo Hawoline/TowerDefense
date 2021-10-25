@@ -1,22 +1,40 @@
 package ru.hawoline.towerdefense.listener;
 
+import ru.hawoline.towerdefense.Game;
+import ru.hawoline.towerdefense.GameState;
+
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener {
+    private Game game;
+
+    public MyMouseListener(Game game) {
+        this.game = game;
+    }
+
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
+        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
+            switch (GameState.gameState) {
+                case MENU:
+                    game.getMenu().mouseClicked(mouseEvent.getX(), mouseEvent.getY());
+                    System.out.println("dlsvmlvm" + mouseEvent.getX() + " " + mouseEvent.getY());
+                    break;
+                case PLAYING:
+                    game.getPlaying().mouseClicked(mouseEvent.getX(), mouseEvent.getY());
 
+                    break;
+                case SETTINGS:
+                    break;
+            }
+        }
     }
 
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
-        if (mouseEvent.getButton() == MouseEvent.BUTTON1) {
-            System.out.println("Left button clicked!");
-        } else if (mouseEvent.getButton() == MouseEvent.BUTTON2) {
-            System.out.println("Right button clicked!");
-        }
+
     }
 
     @Override
@@ -41,6 +59,15 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     @Override
     public void mouseMoved(MouseEvent mouseEvent) {
-
+        switch (GameState.gameState) {
+            case MENU:
+                game.getMenu().mouseMoved(mouseEvent.getX(), mouseEvent.getY());
+                System.out.println("dlsvmlvm" + mouseEvent.getX() + " " + mouseEvent.getY());
+                break;
+            case PLAYING:
+                break;
+            case SETTINGS:
+                break;
+        }
     }
 }

@@ -1,22 +1,21 @@
 package ru.hawoline.towerdefense;
 
+import ru.hawoline.towerdefense.listener.KeyBoardListener;
+import ru.hawoline.towerdefense.listener.MyMouseListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Random;
 
 public class GameScreen extends JPanel {
-    private Random random;
     private Game game;
     private Dimension size;
-    private Render render;
+    private MyMouseListener myMouseListener;
+    private KeyBoardListener keyBoardListener;
 
     public GameScreen(Game game) {
         this.game = game;
-        random = new Random();
         setPanelSize();
-        render = new Render(game);
+        initInputs();
     }
 
     private void setPanelSize() {
@@ -32,5 +31,16 @@ public class GameScreen extends JPanel {
         super.paintComponent(graphics);
 
         game.getRender().render(graphics);
+    }
+
+    private void initInputs() {
+        myMouseListener = new MyMouseListener(game);
+        keyBoardListener = new KeyBoardListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(keyBoardListener);
+
+        requestFocus();
     }
 }

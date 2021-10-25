@@ -13,4 +13,14 @@ public class Settings extends GameScene {
     public void render(Graphics graphics) {
 
     }
+
+    @Override
+    public void mouseClicked(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseMoved(int x, int y) {
+
+    }
 }
