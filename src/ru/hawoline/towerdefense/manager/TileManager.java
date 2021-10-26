@@ -19,9 +19,10 @@ public class TileManager {
     }
 
     private void createTiles() {
-        tiles.add(grass = new Tile(getSprite(8, 1)));
-        tiles.add(water = new Tile(getSprite(0, 6)));
-        tiles.add(road = new Tile(getSprite(9, 0)));
+        int id = 0;
+        tiles.add(grass = new Tile(getSprite(8, 1), id++, "Grass"));
+        tiles.add(water = new Tile(getSprite(0, 6), id++, "Water"));
+        tiles.add(road = new Tile(getSprite(9, 0), id++, "Road"));
     }
 
     private void loadAtlas() {

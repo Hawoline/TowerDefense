@@ -9,6 +9,7 @@ public class MyButton {
     private int y;
     private int width;
     private int height;
+    private int id;
     private boolean mouseOver;
 
     private Rectangle bounds;
@@ -19,10 +20,21 @@ public class MyButton {
         this.y = y;
         this.width = width;
         this.height = height;
+        this.id = -1;
 
         initBounds();
     }
 
+    public MyButton(String text, int x, int y, int width, int height, int id) {
+        this.text = text;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.id = id;
+
+        initBounds();
+    }
     private void initBounds() {
         bounds = new Rectangle(x, y, width, height);
     }
@@ -50,11 +62,31 @@ public class MyButton {
         graphics.drawString(text, x + width / 2 - textWidth / 2, y + height / 2 + textHeight / 2);
     }
 
-    public Rectangle getBounds() {
-        return bounds;
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
+    }
+
+    public Rectangle getBounds() {
+        return bounds;
+    }
+
+    public int getId() {
+        return id;
     }
 }

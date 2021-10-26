@@ -3,6 +3,7 @@ package ru.hawoline.towerdefense.scene;
 import ru.hawoline.towerdefense.Game;
 import ru.hawoline.towerdefense.GameState;
 import ru.hawoline.towerdefense.manager.TileManager;
+import ru.hawoline.towerdefense.ui.BottomBar;
 import ru.hawoline.towerdefense.ui.MyButton;
 import ru.hawoline.towerdefense.util.LevelBuilder;
 
@@ -11,13 +12,14 @@ import java.awt.*;
 public class Playing extends GameScene {
     private int[][] level;
     private TileManager tileManager;
-    private MyButton buttonGoToMenu;
+
+    private BottomBar bottomBar;
 
     public Playing(Game game) {
         super(game);
         level = LevelBuilder.getLevelData();
         tileManager = new TileManager();
-        buttonGoToMenu = new MyButton("Menu", 0, 0, 100, 30);
+        bottomBar = new BottomBar(0, 640, 640, 100, this);
     }
 
     @Override
@@ -28,18 +30,24 @@ public class Playing extends GameScene {
                 graphics.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
             }
         }
-        buttonGoToMenu.draw(graphics);
+        bottomBar.draw(graphics);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
-        if (buttonGoToMenu.getBounds().contains(x, y)) {
-            GameState.setGameState(GameState.MENU);
+        if (y > 640) {
+            bottomBar.mouseClicked(x, y);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
+        if (y > 640) {
+            bottomBar.mouseMoved(x, y);
+        }
+    }
 
+    public TileManager getTileManager() {
+        return tileManager;
     }
 }

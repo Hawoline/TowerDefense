@@ -65,6 +65,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                 System.out.println("dlsvmlvm" + mouseEvent.getX() + " " + mouseEvent.getY());
                 break;
             case PLAYING:
+                game.getPlaying().mouseMoved(mouseEvent.getX(), mouseEvent.getY());
                 break;
             case SETTINGS:
                 break;
