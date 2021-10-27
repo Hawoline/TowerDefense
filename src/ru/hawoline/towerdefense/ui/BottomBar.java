@@ -17,6 +17,7 @@ public class BottomBar {
 
     private MyButton buttonGoToMenu;
     private ArrayList<MyButton> tiles;
+    private Tile selectedTile;
 
     public BottomBar(int x, int y, int width, int height, Playing playing) {
         this.x = x;
@@ -55,12 +56,28 @@ public class BottomBar {
         buttonGoToMenu.draw(graphics);
 
         drawTileButtons(graphics);
+        drawSelectedTile(graphics);
+    }
+
+    private void drawSelectedTile(Graphics graphics) {
+        if (selectedTile != null) {
+            graphics.drawImage(selectedTile.getSprite(), 550, 650, 50, 50, null);
+        }
     }
 
     private void drawTileButtons(Graphics graphics) {
         for (MyButton button: tiles) {
             graphics.drawImage(getButtonImage(button.getId()), button.getX(), button.getY(), button.getWidth(),
                     button.getHeight(), null);
+
+            if (button.isMouseOver()) {
+                graphics.setColor(Color.WHITE);
+                graphics.drawRect(button.getX(), button.getY(), button.getWidth(), button.getHeight());
+            }
+
+            if (button.isMousePressed()) {
+                graphics.drawRect(button.getX() + 1, button.getY() + 1, button.getWidth() - 2, button.getHeight() - 2);
+            }
         }
     }
 
@@ -71,10 +88,23 @@ public class BottomBar {
     public void mouseClicked(int x, int y) {
         if (buttonGoToMenu.getBounds().contains(x, y)) {
             GameState.setGameState(GameState.MENU);
+        } else {
+            for (MyButton button: tiles) {
+                boolean isPressed = button.getBounds().contains(x, y);
+                button.setMousePressed(isPressed);
+                if (isPressed) {
+                    selectedTile = playing.getTileManager().getTile(button.getId());
+                    playing.setSelectedTile(selectedTile);
+                    break;
+                }
+            }
         }
     }
 
     public void mouseMoved(int x, int y) {
         buttonGoToMenu.setMouseOver(buttonGoToMenu.getBounds().contains(x, y));
+        for (MyButton button: tiles) {
+            button.setMouseOver(button.getBounds().contains(x, y));
+        }
     }
 }

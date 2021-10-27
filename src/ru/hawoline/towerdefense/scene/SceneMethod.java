@@ -8,4 +8,6 @@ public interface SceneMethod {
     void mouseClicked(int x, int y);
 
     void mouseMoved(int x, int y);
+
+    void mouseDragged(int x, int y);
 }

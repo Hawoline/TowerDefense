@@ -23,4 +23,9 @@ public class Settings extends GameScene {
     public void mouseMoved(int x, int y) {
 
     }
+
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
 }

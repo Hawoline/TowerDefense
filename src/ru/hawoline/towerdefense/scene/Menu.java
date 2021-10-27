@@ -38,6 +38,11 @@ public class Menu extends GameScene {
         buttonPlaying.setMouseOver(buttonPlaying.getBounds().contains(x, y));
     }
 
+    @Override
+    public void mouseDragged(int x, int y) {
+
+    }
+
     private void drawButtons(Graphics graphics) {
         buttonPlaying.draw(graphics);
     }

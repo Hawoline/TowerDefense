@@ -10,7 +10,9 @@ public class MyButton {
     private int width;
     private int height;
     private int id;
+
     private boolean mouseOver;
+    private boolean mousePressed;
 
     private Rectangle bounds;
 
@@ -78,8 +80,20 @@ public class MyButton {
         return height;
     }
 
+    public boolean isMouseOver() {
+        return mouseOver;
+    }
+
     public void setMouseOver(boolean mouseOver) {
         this.mouseOver = mouseOver;
+    }
+
+    public boolean isMousePressed() {
+        return mousePressed;
+    }
+
+    public void setMousePressed(boolean mousePressed) {
+        this.mousePressed = mousePressed;
     }
 
     public Rectangle getBounds() {
