@@ -70,7 +70,6 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
         switch (GameState.gameState) {
             case MENU:
                 game.getMenu().mouseMoved(mouseEvent.getX(), mouseEvent.getY());
-                System.out.println("dlsvmlvm" + mouseEvent.getX() + " " + mouseEvent.getY());
                 break;
             case PLAYING:
                 game.getPlaying().mouseMoved(mouseEvent.getX(), mouseEvent.getY());

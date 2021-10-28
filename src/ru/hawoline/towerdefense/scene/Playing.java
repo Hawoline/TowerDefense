@@ -5,8 +5,10 @@ import ru.hawoline.towerdefense.manager.TileManager;
 import ru.hawoline.towerdefense.object.Tile;
 import ru.hawoline.towerdefense.ui.BottomBar;
 import ru.hawoline.towerdefense.util.LevelBuilder;
+import ru.hawoline.towerdefense.util.LoadSave;
 
 import java.awt.*;
+import java.util.Arrays;
 
 public class Playing extends GameScene {
     private int[][] level;
@@ -23,6 +25,13 @@ public class Playing extends GameScene {
         level = LevelBuilder.getLevelData();
         tileManager = new TileManager();
         bottomBar = new BottomBar(0, 640, 640, 100, this);
+
+        createDefaultLevel();
+    }
+
+    private void createDefaultLevel() {
+        int[] array = LoadSave.readLevel("1 Level.txt");
+        System.out.println(Arrays.toString(array));
     }
 
     @Override

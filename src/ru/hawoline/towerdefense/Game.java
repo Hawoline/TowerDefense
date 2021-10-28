@@ -1,7 +1,5 @@
 package ru.hawoline.towerdefense;
 
-import ru.hawoline.towerdefense.listener.KeyBoardListener;
-import ru.hawoline.towerdefense.listener.MyMouseListener;
 import ru.hawoline.towerdefense.scene.Menu;
 import ru.hawoline.towerdefense.scene.Playing;
 import ru.hawoline.towerdefense.scene.Settings;
