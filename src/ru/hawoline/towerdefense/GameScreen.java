@@ -25,7 +25,6 @@ public class GameScreen extends JPanel {
         setMaximumSize(size);
     }
 
-
     @Override
     protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);

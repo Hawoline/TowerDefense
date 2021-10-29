@@ -30,8 +30,7 @@ public class Playing extends GameScene {
     }
 
     private void createDefaultLevel() {
-        int[] array = LoadSave.readLevel("1 Level.txt");
-        System.out.println(Arrays.toString(array));
+        level = LoadSave.readLevel("FirstLevel.txt");
     }
 
     @Override
@@ -87,5 +86,9 @@ public class Playing extends GameScene {
 
     public void setSelectedTile(Tile selectedTile) {
         this.selectedTile = selectedTile;
+    }
+
+    public void saveLevel() {
+        LoadSave.saveLevel("FirstLevel.txt", level);
     }
 }

@@ -37,7 +37,6 @@ public class LoadSave {
     }
 
     public static void writeToFile(File file, int[] ids) {
-
         try {
             PrintWriter printWriter = new PrintWriter(file);
 
@@ -62,14 +61,17 @@ public class LoadSave {
         }
     }
 
-    public static int[] readLevel(String filename) {
+    public static int[][] readLevel(String filename) {
         File txtFile = new File("src/ru/hawoline/towerdefense/res/" + filename);
-        int[] array = new int[400];
+        int[][] array = new int[20][20];
         try {
             Scanner scanner = new Scanner(txtFile);
-            int i = 0;
-            while (scanner.hasNextInt()) {
-                array[i++] = scanner.nextInt();
+            for (int i = 0; i < 20; i++) {
+                for (int j = 0; j < 20; j++) {
+                    if (scanner.hasNextInt()) {
+                        array[i][j] = scanner.nextInt();
+                    }
+                }
             }
             scanner.close();
         } catch (FileNotFoundException e) {
@@ -77,5 +79,20 @@ public class LoadSave {
         }
 
         return array;
+    }
+
+    public static void saveLevel(String name, int[][] level) {
+        File file = new File("src/ru/hawoline/towerdefense/res/" + name);
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            for (int[] ints : level) {
+                for (int levelId : ints) {
+                    printWriter.println(levelId);
+                }
+            }
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -16,6 +16,7 @@ public class BottomBar {
     private Playing playing;
 
     private MyButton buttonGoToMenu;
+    private MyButton buttonSave;
     private ArrayList<MyButton> tiles;
     private Tile selectedTile;
 
@@ -32,6 +33,7 @@ public class BottomBar {
 
     private void initButtons() {
         buttonGoToMenu = new MyButton("Menu", 2, 642, 100, 30);
+        buttonSave = new MyButton("Save", 2, 674, 100, 30);
         int width = 50;
         int height = 50;
         int xStart = 110;
@@ -57,6 +59,7 @@ public class BottomBar {
 
         drawTileButtons(graphics);
         drawSelectedTile(graphics);
+        buttonSave.draw(graphics);
     }
 
     private void drawSelectedTile(Graphics graphics) {
@@ -88,6 +91,9 @@ public class BottomBar {
     public void mouseClicked(int x, int y) {
         if (buttonGoToMenu.getBounds().contains(x, y)) {
             GameState.setGameState(GameState.MENU);
+        }
+        else if (buttonSave.getBounds().contains(x, y)) {
+            saveLevel();
         } else {
             for (MyButton button: tiles) {
                 boolean isPressed = button.getBounds().contains(x, y);
@@ -101,8 +107,13 @@ public class BottomBar {
         }
     }
 
+    private void saveLevel() {
+        playing.saveLevel();
+    }
+
     public void mouseMoved(int x, int y) {
         buttonGoToMenu.setMouseOver(buttonGoToMenu.getBounds().contains(x, y));
+        buttonSave.setMouseOver(buttonSave.getBounds().contains(x, y));
         for (MyButton button: tiles) {
             button.setMouseOver(button.getBounds().contains(x, y));
         }
