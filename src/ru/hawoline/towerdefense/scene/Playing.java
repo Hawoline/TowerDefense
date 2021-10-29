@@ -8,7 +8,6 @@ import ru.hawoline.towerdefense.util.LevelBuilder;
 import ru.hawoline.towerdefense.util.LoadSave;
 
 import java.awt.*;
-import java.util.Arrays;
 
 public class Playing extends GameScene {
     private int[][] level;
