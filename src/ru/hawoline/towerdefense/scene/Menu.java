@@ -29,10 +29,10 @@ public class Menu extends GameScene {
     @Override
     public void mouseClicked(int x, int y) {
         if (buttonPlaying.getBounds().contains(x, y)) {
-            GameState.setGameState(GameState.PLAYING);
+            getGame().setGameScene(GameState.PLAYING);
             getGame().getPlaying().createDefaultLevel();
         } else if (buttonEditing.getBounds().contains(x, y)) {
-            GameState.setGameState(GameState.EDITING);
+            getGame().setGameScene(GameState.EDITING);
         }
     }
 

@@ -1,17 +1,12 @@
 package ru.hawoline.towerdefense;
 
 import ru.hawoline.towerdefense.manager.TileManager;
-import ru.hawoline.towerdefense.scene.Editing;
-import ru.hawoline.towerdefense.scene.Menu;
-import ru.hawoline.towerdefense.scene.Playing;
-import ru.hawoline.towerdefense.scene.Settings;
+import ru.hawoline.towerdefense.scene.*;
 
 import javax.swing.*;
-import java.awt.image.BufferedImage;
 
 public class Game extends JFrame implements Runnable {
     private GameScreen gameScreen;
-    private BufferedImage bufferedImage;
     private long lastFrame;
     private long lastUpdate;
     private int updates = 0;
@@ -19,6 +14,7 @@ public class Game extends JFrame implements Runnable {
     private Thread gameThread;
 
     private Render render;
+    private GameScene currentScene;
     private Playing playing;
     private Menu menu;
     private Settings settings;
@@ -49,6 +45,7 @@ public class Game extends JFrame implements Runnable {
         menu = new Menu(this);
         playing = new Playing(this);
         editing = new Editing(this);
+        currentScene = menu;
     }
 
     private void loopGame() {
@@ -90,6 +87,14 @@ public class Game extends JFrame implements Runnable {
         return render;
     }
 
+    public TileManager getTileManager() {
+        return tileManager;
+    }
+
+    public GameScene getCurrentScene() {
+        return currentScene;
+    }
+
     public Playing getPlaying() {
         return playing;
     }
@@ -106,7 +111,15 @@ public class Game extends JFrame implements Runnable {
         return editing;
     }
 
-    public TileManager getTileManager() {
-        return tileManager;
+    public void setGameScene(GameState gameState) {
+        if (gameState == GameState.MENU) {
+            currentScene = menu;
+        } else if (gameState == GameState.EDITING) {
+            currentScene = editing;
+        } else if (gameState == GameState.PLAYING) {
+            currentScene = playing;
+        } else if (gameState == GameState.SETTINGS) {
+            currentScene = settings;
+        }
     }
 }

@@ -34,7 +34,7 @@ public class ActionBar extends Bar {
 
     public void mouseClicked(int x, int y) {
         if (buttonGoToMenu.getBounds().contains(x, y)) {
-            GameState.setGameState(GameState.MENU);
+            playing.getGame().setGameScene(GameState.MENU);
         }
     }
 

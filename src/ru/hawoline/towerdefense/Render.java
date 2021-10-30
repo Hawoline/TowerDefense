@@ -14,19 +14,6 @@ public class Render {
     }
 
     public void render(Graphics graphics) {
-        switch (GameState.gameState) {
-            case MENU:
-                game.getMenu().render(graphics);
-                break;
-            case EDITING:
-                game.getEditing().render(graphics);
-                break;
-            case PLAYING:
-                game.getPlaying().render(graphics);
-                break;
-            case SETTINGS:
-                game.getSettings().render(graphics);
-                break;
-        }
+        game.getCurrentScene().render(graphics);
     }
 }
