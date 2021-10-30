@@ -18,6 +18,9 @@ public class Render {
             case MENU:
                 game.getMenu().render(graphics);
                 break;
+            case EDITING:
+                game.getEditing().render(graphics);
+                break;
             case PLAYING:
                 game.getPlaying().render(graphics);
                 break;

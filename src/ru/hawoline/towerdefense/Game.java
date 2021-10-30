@@ -1,5 +1,7 @@
 package ru.hawoline.towerdefense;
 
+import ru.hawoline.towerdefense.manager.TileManager;
+import ru.hawoline.towerdefense.scene.Editing;
 import ru.hawoline.towerdefense.scene.Menu;
 import ru.hawoline.towerdefense.scene.Playing;
 import ru.hawoline.towerdefense.scene.Settings;
@@ -20,6 +22,9 @@ public class Game extends JFrame implements Runnable {
     private Playing playing;
     private Menu menu;
     private Settings settings;
+    private Editing editing;
+
+    private TileManager tileManager;
 
     private static final long TIME_PER_FRAME = 1000 / 120;
     private static final long TIME_PER_UPDATE = 1000 / 60;
@@ -30,6 +35,7 @@ public class Game extends JFrame implements Runnable {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        tileManager = new TileManager();
         gameScreen = new GameScreen(this);
         add(gameScreen);
         pack();
@@ -42,6 +48,7 @@ public class Game extends JFrame implements Runnable {
         gameScreen = new GameScreen(this);
         menu = new Menu(this);
         playing = new Playing(this);
+        editing = new Editing(this);
     }
 
     private void loopGame() {
@@ -93,5 +100,13 @@ public class Game extends JFrame implements Runnable {
 
     public Settings getSettings() {
         return settings;
+    }
+
+    public Editing getEditing() {
+        return editing;
+    }
+
+    public TileManager getTileManager() {
+        return tileManager;
     }
 }

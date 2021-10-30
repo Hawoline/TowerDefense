@@ -2,38 +2,29 @@ package ru.hawoline.towerdefense.ui;
 
 import ru.hawoline.towerdefense.GameState;
 import ru.hawoline.towerdefense.object.Tile;
-import ru.hawoline.towerdefense.scene.Playing;
+import ru.hawoline.towerdefense.scene.Editing;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-public class BottomBar {
-    private int x;
-    private int y;
-    private int width;
-    private int height;
-    private Playing playing;
-
+public class ToolBar extends Bar {
     private MyButton buttonGoToMenu;
     private MyButton buttonSave;
-    private ArrayList<MyButton> tiles;
+    private ArrayList<MyButton> tiles = new ArrayList<>();
+    ;
     private Tile selectedTile;
+    private Editing editing;
 
-    public BottomBar(int x, int y, int width, int height, Playing playing) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-        this.playing = playing;
-        tiles = new ArrayList<>();
-
+    public ToolBar(int x, int y, int width, int height, Editing editing) {
+        super(x, y, width, height);
+        this.editing = editing;
         initButtons();
     }
 
     private void initButtons() {
         buttonGoToMenu = new MyButton("Menu", 2, 642, 100, 30);
-        buttonSave = new MyButton("Save", 2, 674, 100, 30);
+        buttonSave = new MyButton("Save", 2, 675, 100, 30);
         int width = 50;
         int height = 50;
         int xStart = 110;
@@ -41,7 +32,7 @@ public class BottomBar {
         int xOffset = (int) (width * 1.1f);
 
         int i = 0;
-        for (Tile tile: playing.getTileManager().tiles) {
+        for (Tile tile: editing.getTileManager().tiles) {
             tiles.add(new MyButton(tile.getName(), xStart + xOffset * i, yStart, width, height, i));
             i++;
         }
@@ -49,18 +40,18 @@ public class BottomBar {
 
     public void draw(Graphics graphics) {
         graphics.setColor(Color.ORANGE);
-        graphics.fillRect(x, y, width, height);
+        graphics.fillRect(getX(), getY(), getWidth(), getHeight());
 
         drawButtons(graphics);
+        drawSelectedTile(graphics);
     }
 
     public void drawButtons(Graphics graphics) {
-        buttonGoToMenu.draw(graphics);
-
-        drawTileButtons(graphics);
-        drawSelectedTile(graphics);
         buttonSave.draw(graphics);
+        buttonGoToMenu.draw(graphics);
+        drawTileButtons(graphics);
     }
+
 
     private void drawSelectedTile(Graphics graphics) {
         if (selectedTile != null) {
@@ -85,30 +76,25 @@ public class BottomBar {
     }
 
     private BufferedImage getButtonImage(int id) {
-        return playing.getTileManager().getSprite(id);
+        return editing.getTileManager().getSprite(id);
     }
 
     public void mouseClicked(int x, int y) {
         if (buttonGoToMenu.getBounds().contains(x, y)) {
             GameState.setGameState(GameState.MENU);
-        }
-        else if (buttonSave.getBounds().contains(x, y)) {
+        } else if (buttonSave.getBounds().contains(x, y)) {
             saveLevel();
         } else {
             for (MyButton button: tiles) {
                 boolean isPressed = button.getBounds().contains(x, y);
                 button.setMousePressed(isPressed);
                 if (isPressed) {
-                    selectedTile = playing.getTileManager().getTile(button.getId());
-                    playing.setSelectedTile(selectedTile);
+                    selectedTile = editing.getTileManager().getTile(button.getId());
+                    editing.setSelectedTile(selectedTile);
                     break;
                 }
             }
         }
-    }
-
-    private void saveLevel() {
-        playing.saveLevel();
     }
 
     public void mouseMoved(int x, int y) {
@@ -118,4 +104,9 @@ public class BottomBar {
             button.setMouseOver(button.getBounds().contains(x, y));
         }
     }
+
+    private void saveLevel() {
+        editing.saveLevel();
+    }
+
 }

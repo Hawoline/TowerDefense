@@ -1,7 +1,7 @@
 package ru.hawoline.towerdefense;
 
 public enum GameState {
-    PLAYING, MENU, SETTINGS;
+    PLAYING, EDITING, MENU, SETTINGS;
 
     public static GameState gameState = MENU;
 

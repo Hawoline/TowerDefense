@@ -14,7 +14,7 @@ public class Menu extends GameScene {
 
     private MyButton buttonPlaying;
     private MyButton buttonSettings;
-    private MyButton buttonQuit;
+    private MyButton buttonEditing;
 
     public Menu(Game game) {
         super(game);
@@ -30,12 +30,16 @@ public class Menu extends GameScene {
     public void mouseClicked(int x, int y) {
         if (buttonPlaying.getBounds().contains(x, y)) {
             GameState.setGameState(GameState.PLAYING);
+            getGame().getPlaying().createDefaultLevel();
+        } else if (buttonEditing.getBounds().contains(x, y)) {
+            GameState.setGameState(GameState.EDITING);
         }
     }
 
     @Override
     public void mouseMoved(int x, int y) {
         buttonPlaying.setMouseOver(buttonPlaying.getBounds().contains(x, y));
+        buttonEditing.setMouseOver(buttonEditing.getBounds().contains(x, y));
     }
 
     @Override
@@ -45,10 +49,11 @@ public class Menu extends GameScene {
 
     private void drawButtons(Graphics graphics) {
         buttonPlaying.draw(graphics);
+        buttonEditing.draw(graphics);
     }
 
     private void initButtons() {
         buttonPlaying = new MyButton("Play", 100, 100, 100, 30);
-
+        buttonEditing = new MyButton("Edit", 100, 138, 100, 30);
     }
 }
