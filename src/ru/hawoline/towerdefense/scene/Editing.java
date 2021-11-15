@@ -4,7 +4,6 @@ import ru.hawoline.towerdefense.Game;
 import ru.hawoline.towerdefense.manager.TileManager;
 import ru.hawoline.towerdefense.object.Tile;
 import ru.hawoline.towerdefense.ui.ToolBar;
-import ru.hawoline.towerdefense.util.LevelBuilder;
 import ru.hawoline.towerdefense.util.LoadSave;
 
 import java.awt.*;

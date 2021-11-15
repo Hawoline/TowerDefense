@@ -14,6 +14,7 @@ public class Game extends JFrame implements Runnable {
     private Thread gameThread;
 
     private Render render;
+
     private GameScene currentScene;
     private Playing playing;
     private Menu menu;
