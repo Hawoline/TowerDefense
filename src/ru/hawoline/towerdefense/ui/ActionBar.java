@@ -8,7 +8,7 @@ import java.awt.*;
 public class ActionBar extends Bar {
     private Playing playing;
 
-    private MyButton buttonGoToMenu;
+    private CustomButton buttonGoToMenu;
 
     public ActionBar(int x, int y, int width, int height, Playing playing) {
         super(x, y, width, height);
@@ -18,7 +18,7 @@ public class ActionBar extends Bar {
     }
 
     private void initButtons() {
-        buttonGoToMenu = new MyButton("Menu", 2, 642, 100, 30);
+        buttonGoToMenu = new CustomButton("Menu", 2, 642, 100, 30);
     }
 
     public void draw(Graphics graphics) {

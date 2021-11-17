@@ -7,14 +7,17 @@ import ru.hawoline.towerdefense.scene.Editing;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ToolBar extends Bar {
-    private MyButton buttonGoToMenu;
-    private MyButton buttonSave;
-    private ArrayList<MyButton> tiles = new ArrayList<>();
-    ;
+    private CustomButton buttonGoToMenu;
+    private CustomButton buttonSave;
+    private ArrayList<CustomButton> tiles = new ArrayList<>();
     private Tile selectedTile;
     private Editing editing;
+
+//    private Map<CustomButton, ArrayList<Tile>> tileButtons = new HashMap<>();
 
     public ToolBar(int x, int y, int width, int height, Editing editing) {
         super(x, y, width, height);
@@ -23,8 +26,8 @@ public class ToolBar extends Bar {
     }
 
     private void initButtons() {
-        buttonGoToMenu = new MyButton("Menu", 2, 642, 100, 30);
-        buttonSave = new MyButton("Save", 2, 675, 100, 30);
+        buttonGoToMenu = new CustomButton("Menu", 2, 642, 100, 30);
+        buttonSave = new CustomButton("Save", 2, 675, 100, 30);
         int width = 50;
         int height = 50;
         int xStart = 110;
@@ -33,7 +36,7 @@ public class ToolBar extends Bar {
 
         int i = 0;
         for (Tile tile: editing.getTileManager().tiles) {
-            tiles.add(new MyButton(tile.getName(), xStart + xOffset * i, yStart, width, height, i));
+            tiles.add(new CustomButton(tile.getName(), xStart + xOffset * i, yStart, width, height, i));
             i++;
         }
     }
@@ -60,7 +63,7 @@ public class ToolBar extends Bar {
     }
 
     private void drawTileButtons(Graphics graphics) {
-        for (MyButton button: tiles) {
+        for (CustomButton button: tiles) {
             graphics.drawImage(getButtonImage(button.getId()), button.getX(), button.getY(), button.getWidth(),
                     button.getHeight(), null);
 
@@ -85,7 +88,7 @@ public class ToolBar extends Bar {
         } else if (buttonSave.getBounds().contains(x, y)) {
             saveLevel();
         } else {
-            for (MyButton button: tiles) {
+            for (CustomButton button: tiles) {
                 boolean isPressed = button.getBounds().contains(x, y);
                 button.setMousePressed(isPressed);
                 if (isPressed) {
@@ -100,7 +103,7 @@ public class ToolBar extends Bar {
     public void mouseMoved(int x, int y) {
         buttonGoToMenu.setMouseOver(buttonGoToMenu.getBounds().contains(x, y));
         buttonSave.setMouseOver(buttonSave.getBounds().contains(x, y));
-        for (MyButton button: tiles) {
+        for (CustomButton button: tiles) {
             button.setMouseOver(button.getBounds().contains(x, y));
         }
     }

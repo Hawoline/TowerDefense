@@ -2,7 +2,7 @@ package ru.hawoline.towerdefense.scene;
 
 import ru.hawoline.towerdefense.Game;
 import ru.hawoline.towerdefense.GameState;
-import ru.hawoline.towerdefense.ui.MyButton;
+import ru.hawoline.towerdefense.ui.CustomButton;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -12,9 +12,9 @@ public class Menu extends GameScene {
     private BufferedImage image;
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
 
-    private MyButton buttonPlaying;
-    private MyButton buttonSettings;
-    private MyButton buttonEditing;
+    private CustomButton buttonPlaying;
+    private CustomButton buttonSettings;
+    private CustomButton buttonEditing;
 
     public Menu(Game game) {
         super(game);
@@ -53,7 +53,7 @@ public class Menu extends GameScene {
     }
 
     private void initButtons() {
-        buttonPlaying = new MyButton("Play", 100, 100, 100, 30);
-        buttonEditing = new MyButton("Edit", 100, 138, 100, 30);
+        buttonPlaying = new CustomButton("Play", 100, 100, 100, 30);
+        buttonEditing = new CustomButton("Edit", 100, 138, 100, 30);
     }
 }

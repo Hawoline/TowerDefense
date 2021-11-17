@@ -3,7 +3,7 @@ package ru.hawoline.towerdefense.ui;
 import javax.swing.*;
 import java.awt.*;
 
-public class MyButton {
+public class CustomButton {
     private String text;
     private int x;
     private int y;
@@ -16,7 +16,7 @@ public class MyButton {
 
     private Rectangle bounds;
 
-    public MyButton(String text, int x, int y, int width, int height) {
+    public CustomButton(String text, int x, int y, int width, int height) {
         this.text = text;
         this.x = x;
         this.y = y;
@@ -27,7 +27,7 @@ public class MyButton {
         initBounds();
     }
 
-    public MyButton(String text, int x, int y, int width, int height, int id) {
+    public CustomButton(String text, int x, int y, int width, int height, int id) {
         this.text = text;
         this.x = x;
         this.y = y;
