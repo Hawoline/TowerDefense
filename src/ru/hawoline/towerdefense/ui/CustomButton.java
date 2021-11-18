@@ -103,4 +103,9 @@ public class CustomButton {
     public int getId() {
         return id;
     }
+
+    public void resetBooleans() {
+        setMouseOver(false);
+        setMousePressed(false);
+    }
 }
