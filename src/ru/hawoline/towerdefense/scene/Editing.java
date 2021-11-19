@@ -58,7 +58,7 @@ public class Editing extends GameScene {
         canDrawSelectedTile = true;
         mouseX = x;
         mouseY = y;
-        if (y >= 640) {
+        if (y > 640 || x > 640) {
             canDrawSelectedTile = false;
             toolbar.mouseMoved(x, y);
         }

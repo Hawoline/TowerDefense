@@ -185,7 +185,8 @@ public class ToolBar extends Bar {
 
     public void rotateSprite() {
         ArrayList<Tile> currentTiles = tileButtons.get(currentButton);
-        if (currentTiles == null) {
+        int selectedTileId = selectedTile.getId();
+        if (currentTiles == null || selectedTileId == buttonGrass.getId() || selectedTileId == buttonWater.getId()) {
             return;
         }
         selectedTile = currentTiles.get(currentIndex = (currentIndex + 1) % currentTiles.size());
