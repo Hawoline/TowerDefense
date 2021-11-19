@@ -18,7 +18,7 @@ public class Editing extends GameScene {
     private Tile selectedTile;
     private ToolBar toolbar;
 
-    private boolean drawSelectedTile = false;
+    private boolean canDrawSelectedTile = false;
 
     public Editing(Game game) {
         super(game);
@@ -55,18 +55,18 @@ public class Editing extends GameScene {
 
     @Override
     public void mouseMoved(int x, int y) {
-        drawSelectedTile = true;
+        canDrawSelectedTile = true;
         mouseX = x;
         mouseY = y;
         if (y >= 640) {
-            drawSelectedTile = false;
+            canDrawSelectedTile = false;
             toolbar.mouseMoved(x, y);
         }
     }
 
     @Override
     public void mousePressed(int x, int y) {
-        drawSelectedTile = false;
+        canDrawSelectedTile = false;
         if (y >= 640) {
             toolbar.mousePressed(x, y);
         }
@@ -87,12 +87,12 @@ public class Editing extends GameScene {
 
     @Override
     public void mouseDragged(int x, int y) {
-        drawSelectedTile = false;
+        canDrawSelectedTile = false;
         changeTile(x, y);
     }
 
     private void drawSelectedTile(Graphics graphics) {
-        if (selectedTile != null && drawSelectedTile) {
+        if (selectedTile != null && canDrawSelectedTile) {
             graphics.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32, null);
         }
     }
@@ -118,6 +118,6 @@ public class Editing extends GameScene {
 
     public void setSelectedTile(Tile selectedTile) {
         this.selectedTile = selectedTile;
-        drawSelectedTile = true;
+        canDrawSelectedTile = true;
     }
 }
