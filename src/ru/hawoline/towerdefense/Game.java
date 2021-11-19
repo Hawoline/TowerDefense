@@ -31,9 +31,7 @@ public class Game extends JFrame implements Runnable {
         setVisible(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
-        tileManager = new TileManager();
-        gameScreen = new GameScreen(this);
+//        setResizable(false);
         add(gameScreen);
         pack();
         gameThread = new Thread(this);
@@ -43,7 +41,10 @@ public class Game extends JFrame implements Runnable {
     private void initScenesAndRender() {
         render = new Render(this);
         gameScreen = new GameScreen(this);
+        gameScreen.setFocusable(true);
         menu = new Menu(this);
+        tileManager = new TileManager();
+
         playing = new Playing(this);
         editing = new Editing(this);
         currentScene = menu;
@@ -69,7 +70,7 @@ public class Game extends JFrame implements Runnable {
 
     private void callUpdatePerSecond() {
         if (System.currentTimeMillis() - lastTimeUpdatePerSecond >= 1000) {
-            System.out.println("UPS is " + updates++);
+//            System.out.println("UPS is " + updates++);
             updates = 0;
             lastTimeUpdatePerSecond = System.currentTimeMillis();
         }
@@ -113,6 +114,7 @@ public class Game extends JFrame implements Runnable {
     }
 
     public void setGameScene(GameState gameState) {
+        GameState.currentState = gameState;
         if (gameState == GameState.MENU) {
             currentScene = menu;
         } else if (gameState == GameState.EDITING) {

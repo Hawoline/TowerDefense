@@ -43,6 +43,16 @@ public class Menu extends GameScene {
     }
 
     @Override
+    public void mousePressed(int x, int y) {
+
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+
+    }
+
+    @Override
     public void mouseDragged(int x, int y) {
 
     }

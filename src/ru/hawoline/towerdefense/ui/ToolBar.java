@@ -13,9 +13,9 @@ import java.util.Map;
 public class ToolBar extends Bar {
     private CustomButton buttonGoToMenu;
     private CustomButton buttonSave;
-//    private ArrayList<CustomButton> tiles = new ArrayList<>();
     private Tile selectedTile;
     private Editing editing;
+    private CustomButton currentButton;
 
     private Map<CustomButton, ArrayList<Tile>> tileButtons = new HashMap<>();
 
@@ -26,6 +26,8 @@ public class ToolBar extends Bar {
     private CustomButton buttonWaterCorner;
     private CustomButton buttonWaterBeaches;
     private CustomButton buttonWaterIslands;
+
+    private int currentIndex = 0;
 
     public ToolBar(int x, int y, int width, int height, Editing editing) {
         super(x, y, width, height);
@@ -47,7 +49,7 @@ public class ToolBar extends Bar {
         buttonWater = new CustomButton("Water", xStart + xOffset, yStart, width, height, i++);
 
         initTileButton(buttonRoadStraight, editing.getTileManager().getStraightRoads(), xStart, yStart, xOffset, width, height, i++);
-        initTileButton(buttonRoadCorner, editing.getTileManager().getStraightRoads(), xStart, yStart, xOffset, width, height, i++);
+        initTileButton(buttonRoadCorner, editing.getTileManager().getRoadCorners(), xStart, yStart, xOffset, width, height, i++);
         initTileButton(buttonWaterCorner, editing.getTileManager().getWaterCorners(), xStart, yStart, xOffset, width, height, i++);
         initTileButton(buttonWaterBeaches, editing.getTileManager().getBeaches(), xStart, yStart, xOffset, width, height, i++);
         initTileButton(buttonWaterIslands, editing.getTileManager().getIslands(), xStart, yStart, xOffset, width, height, i++);
@@ -120,20 +122,26 @@ public class ToolBar extends Bar {
             editing.getGame().setGameScene(GameState.MENU);
         } else if (buttonSave.getBounds().contains(x, y)) {
             saveLevel();
+        }
+        boolean buttonWaterIsPressed = buttonWater.getBounds().contains(x, y);
+        buttonWater.setMousePressed(buttonWaterIsPressed);
+        boolean buttonGrassIsPressed = buttonGrass.getBounds().contains(x, y);
+        buttonGrass.setMousePressed(buttonGrassIsPressed);
+        if (buttonWaterIsPressed) {
+            selectedTile = editing.getTileManager().getTile(buttonWater.getId());
+            editing.setSelectedTile(selectedTile);
+        } else if (buttonGrassIsPressed) {
+            selectedTile = editing.getTileManager().getTile(buttonGrass.getId());
+            editing.setSelectedTile(selectedTile);
         } else {
-            buttonWater.setMouseOver(buttonWater.getBounds().contains(x, y));
-            boolean isPressed = buttonWater.getBounds().contains(x, y);
-            buttonWater.setMousePressed(isPressed);
-            if (isPressed) {
-//                selectedTile = buttonWater;
-                editing.setSelectedTile(selectedTile);
-            }
             for (CustomButton button: tileButtons.keySet()) {
                 boolean buttonIsPressed = button.getBounds().contains(x, y);
                 button.setMousePressed(buttonIsPressed);
                 if (buttonIsPressed) {
                     selectedTile = tileButtons.get(button).get(0);
                     editing.setSelectedTile(selectedTile);
+                    currentButton = button;
+                    currentIndex = 0;
                     break;
                 }
             }
@@ -143,7 +151,8 @@ public class ToolBar extends Bar {
     public void mouseMoved(int x, int y) {
         buttonGoToMenu.setMouseOver(buttonGoToMenu.getBounds().contains(x, y));
         buttonSave.setMouseOver(buttonSave.getBounds().contains(x, y));
-
+        buttonWater.setMouseOver(buttonWater.getBounds().contains(x, y));
+        buttonGrass.setMouseOver(buttonGrass.getBounds().contains(x, y));
         for (CustomButton button: tileButtons.keySet()) {
             button.setMouseOver(button.getBounds().contains(x, y));
         }
@@ -153,6 +162,8 @@ public class ToolBar extends Bar {
         buttonGoToMenu.setMousePressed(buttonGoToMenu.getBounds().contains(x, y));
         buttonSave.setMousePressed(buttonSave.getBounds().contains(x, y));
 
+        buttonWater.setMousePressed(buttonWater.getBounds().contains(x, y));
+        buttonGrass.setMousePressed(buttonGrass.getBounds().contains(x, y));
         for (CustomButton button: tileButtons.keySet()) {
             button.setMousePressed(button.getBounds().contains(x, y));
         }
@@ -161,6 +172,8 @@ public class ToolBar extends Bar {
     public void mouseReleased(int x, int y) {
         buttonGoToMenu.resetBooleans();
         buttonSave.resetBooleans();
+        buttonWater.resetBooleans();
+        buttonGrass.resetBooleans();
         for (CustomButton button: tileButtons.keySet()) {
             button.resetBooleans();
         }
@@ -170,4 +183,12 @@ public class ToolBar extends Bar {
         editing.saveLevel();
     }
 
+    public void rotateSprite() {
+        ArrayList<Tile> currentTiles = tileButtons.get(currentButton);
+        if (currentTiles == null) {
+            return;
+        }
+        selectedTile = currentTiles.get(currentIndex = (currentIndex + 1) % currentTiles.size());
+        editing.setSelectedTile(selectedTile);
+    }
 }

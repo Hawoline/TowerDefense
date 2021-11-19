@@ -7,6 +7,7 @@ import ru.hawoline.towerdefense.ui.ToolBar;
 import ru.hawoline.towerdefense.util.LoadSave;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 public class Editing extends GameScene {
     private int[][] level;
@@ -17,6 +18,8 @@ public class Editing extends GameScene {
     private Tile selectedTile;
     private ToolBar toolbar;
 
+    private boolean drawSelectedTile = false;
+
     public Editing(Game game) {
         super(game);
         tileManager = new TileManager();
@@ -26,9 +29,9 @@ public class Editing extends GameScene {
 
     @Override
     public void render(Graphics graphics) {
-        drawSelectedTile(graphics);
         toolbar.draw(graphics);
         drawLevel(graphics);
+        drawSelectedTile(graphics);
     }
 
     private void drawLevel(Graphics graphics) {
@@ -52,18 +55,44 @@ public class Editing extends GameScene {
 
     @Override
     public void mouseMoved(int x, int y) {
+        drawSelectedTile = true;
         mouseX = x;
         mouseY = y;
-        toolbar.mouseMoved(x, y);
+        if (y >= 640) {
+            drawSelectedTile = false;
+            toolbar.mouseMoved(x, y);
+        }
+    }
+
+    @Override
+    public void mousePressed(int x, int y) {
+        drawSelectedTile = false;
+        if (y >= 640) {
+            toolbar.mousePressed(x, y);
+        }
+    }
+
+    @Override
+    public void mouseReleased(int x, int y) {
+        if (y >= 640) {
+            toolbar.mouseReleased(x, y);
+        }
+    }
+
+    public void keyPressed(KeyEvent keyEvent) {
+        if (keyEvent.getKeyCode() == KeyEvent.VK_R) {
+            toolbar.rotateSprite();
+        }
     }
 
     @Override
     public void mouseDragged(int x, int y) {
+        drawSelectedTile = false;
         changeTile(x, y);
     }
 
     private void drawSelectedTile(Graphics graphics) {
-        if (selectedTile != null) {
+        if (selectedTile != null && drawSelectedTile) {
             graphics.drawImage(selectedTile.getSprite(), mouseX, mouseY, 32, 32, null);
         }
     }
@@ -72,7 +101,7 @@ public class Editing extends GameScene {
         if (selectedTile == null) {
             return;
         }
-        if (y < 640) {
+        if (y < 640 && x < 640 && y > 0 && x > 0) {
             int xCoordinate = x / 32;
             int yCoordinate = y / 32;
             level[yCoordinate][xCoordinate] = selectedTile.getId();
@@ -89,5 +118,6 @@ public class Editing extends GameScene {
 
     public void setSelectedTile(Tile selectedTile) {
         this.selectedTile = selectedTile;
+        drawSelectedTile = true;
     }
 }
