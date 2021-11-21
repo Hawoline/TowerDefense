@@ -8,8 +8,11 @@ import ru.hawoline.towerdefense.util.LoadSave;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class Editing extends GameScene {
+    private static final int ANIMATION_SPEED = 20;
+
     private int[][] level;
     private int mouseX;
     private int mouseY;
@@ -19,9 +22,12 @@ public class Editing extends GameScene {
     private ToolBar toolbar;
 
     private boolean canDrawSelectedTile = false;
+    private int animationIndex;
+    private int tick;
 
     public Editing(Game game) {
         super(game);
+        tick = 0;
         tileManager = new TileManager();
         toolbar = new ToolBar(0, 640, 640, 100, this);
         createDefaultLevel();
@@ -29,18 +35,42 @@ public class Editing extends GameScene {
 
     @Override
     public void render(Graphics graphics) {
+        updateTick();
         toolbar.draw(graphics);
         drawLevel(graphics);
         drawSelectedTile(graphics);
+    }
+
+    private void updateTick() {
+        tick++;
+        if (tick >= ANIMATION_SPEED) {
+            tick = 0;
+            animationIndex++;
+            if (animationIndex >= 4) {
+                animationIndex = 0;
+            }
+        }
     }
 
     private void drawLevel(Graphics graphics) {
         for (int y = 0; y < level.length; y++) {
             for (int x = 0; x < level[y].length; x++) {
                 int id = level[y][x];
-                graphics.drawImage(getGame().getTileManager().getSprite(id), x * 32, y * 32, null);
+                if (isAnimation(id)) {
+                    graphics.drawImage(getSprite(id, animationIndex), x * 32, y * 32, null);
+                } else {
+                    graphics.drawImage(getGame().getTileManager().getSprite(id), x * 32, y * 32, null);
+                }
             }
         }
+    }
+
+    private boolean isAnimation(int spriteId) {
+        return getGame().getTileManager().isSpriteAnimation(spriteId);
+    }
+
+    public BufferedImage getSprite(int spriteId, int animationIndex) {
+        return getGame().getTileManager().getAnimationSprite(spriteId, animationIndex);
     }
 
     private void createDefaultLevel() {
