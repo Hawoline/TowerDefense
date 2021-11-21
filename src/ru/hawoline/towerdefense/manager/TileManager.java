@@ -78,12 +78,12 @@ public class TileManager {
     private int createRoadCornerTiles(int id) {
         BufferedImage roadCornerSprite = getSprite(7, 0);
         roadCorners.add(bottomLeftRoadCorner = new Tile(
-                ImageFix.getRotateImage(roadCornerSprite, -90), id++, "bottomLeftRoadCorner"));
-        roadCorners.add(topLeftRoadCorner = new Tile(roadCornerSprite, id++, "topLeftRoadCorner"));
+                ImageFix.getRotateImage(roadCornerSprite, -90), id++, "BottomLeftRoadCorner"));
+        roadCorners.add(topLeftRoadCorner = new Tile(roadCornerSprite, id++, "TopLeftRoadCorner"));
         roadCorners.add(topRightRoadCorner = new Tile(
-                ImageFix.getRotateImage(roadCornerSprite, 90), id++, "topRightRoadCorner"));
+                ImageFix.getRotateImage(roadCornerSprite, 90), id++, "TopRightRoadCorner"));
         roadCorners.add(bottomRightRoadCorner = new Tile(
-                ImageFix.getRotateImage(roadCornerSprite, 180), id++, "bottomRightRoadCorner"));
+                ImageFix.getRotateImage(roadCornerSprite, 180), id++, "BottomRightRoadCorner"));
 
         return id;
     }
@@ -121,11 +121,11 @@ public class TileManager {
         islands.add(topLeftIsland = new Tile(
                 ImageFix.buildImage(islandSprites), id++, "topLeftIsland"));
         islands.add(topRightIsland = new Tile(
-                ImageFix.getBuildRotateImage(islandSprites, 90, 1), id++, "topRightIsland"));
+                ImageFix.getBuildRotateImage(islandSprites, 90, 1), id++, "TopRightIsland"));
         islands.add(bottomRightIsland = new Tile(
-                ImageFix.getBuildRotateImage(islandSprites, 180, 1), id++, "bottomRightIsland"));
+                ImageFix.getBuildRotateImage(islandSprites, 180, 1), id++, "BottomRightIsland"));
         islands.add(bottomLeftIsland = new Tile(
-                ImageFix.getBuildRotateImage(islandSprites, -90, 1), id++, "bottomLeftIsland"));
+                ImageFix.getBuildRotateImage(islandSprites, -90, 1), id++, "BottomLeftIsland"));
 
         return id;
     }
