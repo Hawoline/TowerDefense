@@ -1,6 +1,7 @@
 package ru.hawoline.towerdefense.scene;
 
 import ru.hawoline.towerdefense.Game;
+import ru.hawoline.towerdefense.manager.EnemyManager;
 import ru.hawoline.towerdefense.manager.TileManager;
 import ru.hawoline.towerdefense.ui.ActionBar;
 import ru.hawoline.towerdefense.util.LoadSave;
@@ -10,16 +11,25 @@ import java.awt.*;
 public class Playing extends GameScene {
     private int[][] level;
     private ActionBar actionBar;
+    private EnemyManager enemyManager;
 
     public Playing(Game game) {
         super(game);
 
         actionBar = new ActionBar(0, 640, 640, 100, this);
         createDefaultLevel();
+
+        enemyManager = new EnemyManager(this);
+        enemyManager.addEnemy(0, 32);
     }
 
     public void createDefaultLevel() {
         level = LoadSave.readLevel("FirstLevel.txt");
+    }
+
+    @Override
+    public void update() {
+        enemyManager.update();
     }
 
     @Override
@@ -31,12 +41,15 @@ public class Playing extends GameScene {
             }
         }
         actionBar.draw(graphics);
+        enemyManager.draw(graphics);
     }
 
     @Override
     public void mouseClicked(int x, int y) {
         if (y > 640) {
             actionBar.mouseClicked(x, y);
+        } else {
+            enemyManager.addEnemy(x, y);
         }
     }
 

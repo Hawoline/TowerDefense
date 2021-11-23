@@ -66,6 +66,7 @@ public class Game extends JFrame implements Runnable {
     private void updateGame() {
         updates++;
         lastUpdate = System.currentTimeMillis();
+        currentScene.update();
     }
 
     private void callUpdatePerSecond() {

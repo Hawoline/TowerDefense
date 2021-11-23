@@ -12,4 +12,8 @@ public abstract class GameScene implements SceneMethod {
     public Game getGame() {
         return game;
     }
+
+    public void update() {
+
+    }
 }
